@@ -1,0 +1,55 @@
+---
+title: "Homework Set 1"
+author: "Cora Ferguson"
+date: "1/20/2023"
+output: html_document
+---
+
+# Problem 1
+
+1. Cora Ferguson - Senior 
+
+2. Major: Biology-Physics, Minor: Mathematics
+     
+3. I am taking this course because I think it will be a great class to build more familiarity with `R`.  I am planning on going to graduate school next year and I believe learning more about different data management strategies will help me be a bit more prepared.  This class also happens to fulfill the last requirement for my math minor which works well.
+
+4. I took STAT 113 my junior fall (Fall 2021) with Dr. Ramler.
+
+5. I do have some programming experience.  I took Biostats with Erika last semester and that was a great introduction to `R`.  I also have taken CS140 and done external programming using `Python` for my SYE and Modern Physics.  I have also worked with basic `C++` in the *Arduino* IDE and *very* basic `LabView` (last summer I had to learn a little `LabView` to help develop a new laser microsurgery technique). 
+
+6. My hometown is Colorado Springs, Colorado.
+
+7. I am an outfielder/hitter for the softball team at St. Lawrence. 
+
+8. My all time favorite movie is *The Secret Life of Walter Mitty*.  That being said, *Top Gun: Maverick* is a close second.
+
+9. Over these past 2 weeks I found out that I have been accepted to 3 different PhD programs:
+     - Biomedical Sciences at Vanderbilt University
+     - Biological Engineering at CU Boulder
+     - Biological Engineering at the University of Oregon
+
+A lot of hard work went into this so I am pretty proud of my perseverance and it is neat to see things start to pay off. With this, I have been invited to visit Vanderbilt Feburary 2-4 and Oregon February 23-25 so I will be missing a bit of class to go on those visits. 
+
+# Problem 2
+a. For this problem, the goal is to practice importing data and a few different ways of displaying it.  The first thing is to import the data.
+
+```{r}
+# import data
+data(iris)
+```
+
+b. The next task is to print the first 6 rows of the data.  To do this, I will use the `head` function.
+
+```{r}
+# show the first 6 rows of the data set
+head(iris)
+```
+
+c. Next, I will print the last 6 rows of the data.  The easiest way to do this is to use the `tail` function.
+
+```{r}
+# show the last 6 rows of the data set
+tail(iris)
+```
+
+
