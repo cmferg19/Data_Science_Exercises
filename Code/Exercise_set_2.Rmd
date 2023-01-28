@@ -69,4 +69,16 @@ no_inversions <- coasters %>% filter(Inversions == "No")
 t.test(no_inversions$Length, inversions$Length)
 ```
 To take a look at the difference in means, I used a two sample t test.  The results indicate that there is evidence to support a significant difference in the length of roller coasters with and without inversions. The average difference in lengths of coasters without inversions is between 900.24 and 2177.08 feet(p=1.206e-05, df = 52.535, 95% confidence). 
-f. 
+f. Now that we have the numbers from the analysis, we want to organize and clean things up a bit.  To do this, I will use the `tidy` function from the `broom` package. 
+
+```{r}
+# assign the results of the t-test to a variable
+coasterlength_comp <- t.test(no_inversions$Length, inversions$Length)
+
+# tidy up the results of the t-test
+coasterlength_tidy<- broom::tidy(coasterlength_comp)
+
+# use the knitr function to clean up the output and add a caption
+knitr::kable(coasterlength_tidy, digits = 3, caption = "Two sample t-test results of the differences in length between roller coasters without and with inversions.")
+```
+
