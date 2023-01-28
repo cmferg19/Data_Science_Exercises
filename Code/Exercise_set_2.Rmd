@@ -1,0 +1,72 @@
+---
+title: "Exercise Set 2"
+author: "Cora Ferguson"
+date: "1/28/2023"
+output: html_document
+---
+
+# Exercise Set 2 Overview
+## Question 0
+The goal of exercise set 2 is to practice some of the things that we have recently discussed in class. The first thing that I will do is enter in the code that is necessary to import data and play around with it.
+
+```{r}
+# clear the environment window
+rm(list = ls())
+
+# import the libraries that we will be using
+library(readr)
+library(dplyr)
+library(here)
+library(ggplot2)
+library(knitr)
+```
+## Question 1
+a. The first task is to use functions from the `readr` package to import the data.
+
+```{r}
+# import the data
+coasters <- read_csv(here("data", "rollercoasters.csv" ))
+```
+b. Now that the data is in, the next task is to construct a 95% confidence interval for the average duration of a roller coaster.  To do this, I will use the `t.test()` function.
+
+```{r}
+# construct a 95% confidence interval
+t.test(coasters$Duration)
+```
+c. Now we are going to take a look at the speed variable which describes the maximum speed of the roller coaster.  We want to determine whether the mean max speed of a roller coaster is significantly different from 55 mph.  To do this, we will perform a t test because we are looking at the difference between two means.
+
+```{r}
+# perform a t test on speed comparing the averages from the data to the defined average of 55 mph
+t.test(coasters$Speed, mu = 55)
+```
+Based on this t-test, there is evidence that supports the hypothesis stating that the mean max speed of roller coasters is not 55 mph.
+
+d. Now we will take a look at the data using the `dplyr` package.
+
+```{r}
+# use the count() function that is part of dplyr
+count(coasters, Inversions)
+```
+
+Now that we have taken a look at the data, we are going to use this to construct a 90% confidence interval for the proportion of roller coasters with an inversion
+
+```{r}
+# perform a prop.test to take a look at the proportion of coasters with an inversion
+prop.test(25, 57,p = NULL,
+     conf.level = 0.9, correct = TRUE)
+```
+Based on this test, there is a 90% chance that the confidence interval of [0.328, 0.226] contains the true proportion of roller coasters with an inversion.
+
+e. Now we are going to look at how much longer roller coasters with an inversion are compared to those without an inversion.
+
+```{r}
+# group the data by whether or not the coasters have inversions 
+inversions <- coasters %>% filter(Inversions == "Yes")
+
+no_inversions <- coasters %>% filter(Inversions == "No")
+
+# Now I will use the data from this table to determine how much longer rollercoasters without an inversion are compared to those with one.
+t.test(no_inversions$Length, inversions$Length)
+```
+To take a look at the difference in means, I used a two sample t test.  The results indicate that there is evidence to support a significant difference in the length of roller coasters with and without inversions. The average difference in lengths of coasters without inversions is between 900.24 and 2177.08 feet(p=1.206e-05, df = 52.535, 95% confidence). 
+f. 
