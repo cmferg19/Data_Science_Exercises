@@ -1,0 +1,16 @@
+Course,Time,Days,Instructor,Discipline,Seats
+113,Afternoon,"M,W",Chapman,STAT,28
+450,Midday,"M,W,F",Chapman,STAT,10
+113,Midday,"M,W,F",Higham,STAT,28
+113,Midday,"M,W,F",Higham,STAT,28
+334,Morning,"M,W",Higham,"DATA,STAT",15
+113,Morning,"M,W","Lock, P.",STAT,35
+213,Morning,"M,W,F","Lock, R.",STAT,28
+213,Morning,"M,W,F","Lock, R.",STAT,28
+342,Morning,"M,W",O'Hara,"ECON,STAT",30
+113,Afternoon,"T,Th",Ramler,STAT,28
+113,Afternoon,"T,Th",Ramler,STAT,28
+234,Morning,"T,Th",Ramler,"DATA,STAT",25
+113,Morning,"T,Th",Schuckers,STAT,28
+326,Midday,"T,Th",Schuckers,STAT,27
+352,Midday,"M,W,F",Torrey,"CS,DATA,STAT",14
