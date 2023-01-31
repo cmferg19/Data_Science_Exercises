@@ -25,7 +25,6 @@ opts_knit$set(width=75)
 
 
 
-
 # Data Ethics
 
 
@@ -33,7 +32,7 @@ opts_knit$set(width=75)
 
 ### Questions
 
-1. (5 pts) 
+1. Sections 8.1 to 8.3 in *Modern Data Science with R* discuss the different ways that the portrayal of data can be misleading and/or unethical.  It is the responsibility of data scientists to not only analyse data in an unbiased manner, but also find ways to convey that data in an accurate and representative way - no matter what the results might suggest.  When it comes to data visualization strategies, a number of different methods can be used to make the data "appear" better or worse than the numbers actually are.  This is not only unethical, but it can be used to sway public opinion on big public topics - even those with the potential to cause civil unrest or controversy. Prior to reading this, I never really thought to be skeptical of the figures that were distributed in mass media outlets because I always believed that they had been vetted to prevent misinterpretation.  But now, I am beginning to realize the importance of not only paying closer attention to data figures provided to you, but also being more intentional about how I portray data myself to prevent similar misunderstandings.   
 
 2. (3 pts) 
 a. 
