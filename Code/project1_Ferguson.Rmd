@@ -48,25 +48,28 @@ b. While this specific study explores how facial recognition AI can be used to t
 
 4. 
 
-a. (4 pts) 
+a. For this question, I chose the article written by Carolyn Johnson on inherent racial bias within AI used to help identify patients with complex health problems.  While the AI was designed to specifically exclude race, one metric it analysed was overall cost of healhcare for patients.  Theoretically, patients with greater health needs will incur more health related costs but this is not representative of the systemic healthcare barriers that BIPOC populations face in our society.  Often, while people are better able to access and afford quality healthcare which increases their health care costs compared to BIPOC patients; if just going off of this, it misconstrues the "sickness" of patients because it does not take into account other factors like class, location, and hospital funding - all factors that contribute to healthcare access for marginalized populations. 
+
 
 ## Data Privacy
 
 ### Questions 
 
 5. (3 pts) 
-a. 
+a. Given that the class course evaluation PDF's contain demographic information like the student's gender identity, class year, and why they took the class, I don't think that it is ethically ok for this data to be shared with other students.  This information - along with the class rosters could be used to identify the students who wrote each evaluation (or at least get pretty close) which defeats the purpose of these evaluations.  For professors to get the most realistic and true feedback, it is imparative to protect the privacy of the students who wrote those evaluations.  Sharing that information with other students could breach the privacy that the students writing the evaluations were lead to believe they had which is unethical. 
 
-b. 
+b. While having the grade that each student received can help provide some additional context while breaking down the feedback from the evaluations, I still believe this is unethical.  Theoretically, the grades could be traced back to individual students relatively easily with access to demographic information and class rosters.  This is a direct violation of FERPA which protects the academic information of students from being shared with parties that they do not wish it to be shared with - this includes other students.  Something else to consider is how small of a school St. Lawrence is.  Even though in this scenario, we may not know the students who provided this feedback directly, there is always potential that someone has a connection to those students in some form.  Breaching the privacy of these students could impact personal and professional relationships.
 
-c. 
+c. Even though the website that the professor posts the data tables on is public, knowing that this is another SLU professor and that the same information is available, data scraping without permission is still unethical. By choosing to scrape the data without asking the professor for permission, you are completely ignoring the professor's intention for posting that data online and they ways that they wish it to be used.  Also, as I previously mentioned SLU is a small school and the likelihood of the students either knowing or having an indirection connection to someone in that professor's class who wrote those evaluations violates the evaluator's privacy.  
 
 6. (4 pts) 
 
-a. 
+a. I think that it would be ethically ok for you to share the current grade of students and the amount of time they spend on the RStudio server.  Without other identifying information, there aren't really any ways to trace the grades back to individual students which would be where the waters get hazy. 
 
-b. 
+b. In this scenario, I don't think that it would be ethically ok to share the information.  When you share the current grade, class year, and whether or not the student is a stat major, it could lead people to make assumptions and potentially identify some students based off of that information.  When there is potential to identify students based off of academic data, it violates their rights protected by FERPA. 
 
-c. 
+c. I think that it would be ethically ok to share this information because this information is not related to sensitive academic performance related data like grades.  I think the big difference between this scenario and others is that this is all information that I would feel comfortable asking a friend - and I think everyone would be comfortable sharing answers.  Personally, I have a pretty niche major so I know the information would be linked to me pretty quick but things like my favorite R package, and whether or not I took STAT 213 and CS 140 aren't things that I'd worry about others knowing. 
+
+d. Keeping this same scenario in mind but now sharing each student's grade in the course, I think this is where it becomes unethical. Especially with my major, people I know would be able to link that information back to me and I would not want that because my academic information is protected under FERPA. Legally that would be a huge issue and for students, it could create a toxic environment because even though not all information could be directly traced to each student, there are certain students who would have sensitive information out there which is not okay. 
 
 d. 
