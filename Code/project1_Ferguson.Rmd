@@ -34,15 +34,16 @@ opts_knit$set(width=75)
 
 1. Sections 8.1 to 8.3 in *Modern Data Science with R* discuss the different ways that the portrayal of data can be misleading and/or unethical.  It is the responsibility of data scientists to not only analyse data in an unbiased manner, but also find ways to convey that data in an accurate and representative way - no matter what the results might suggest.  When it comes to data visualization strategies, a number of different methods can be used to make the data "appear" better or worse than the numbers actually are.  This is not only unethical, but it can be used to sway public opinion on big public topics - even those with the potential to cause civil unrest or controversy. Prior to reading this, I never really thought to be skeptical of the figures that were distributed in mass media outlets because I always believed that they had been vetted to prevent misinterpretation.  But now, I am beginning to realize the importance of not only paying closer attention to data figures provided to you, but also being more intentional about how I portray data myself to prevent similar misunderstandings.   
 
-2. (3 pts) 
-a. 
+2.  
+a. Missing example: Mobility for older adults with physical disabilities and/or cognitive impairments. 
+
+It is important to acknowledge missing data in an analysis because missing data greatly hinders the conclusions that one is able to draw.  Missing data prevents us from having the full picture which could lead to the misinterpretation of data and/or downplaying of the significance of an issue.  For there to be data missing regarding the mobility for older adults with physical disabilities and/or cognitive impairments, it makes it seem as if accessibility issues within our society are not as widespread as they are.  Acknowledging this missing data provides context behind the analysis and helps prevent the spreading of potentially misleading information.
 
 3. 
 
-a. (3 pts)
+a. Research that specifically targets marginalized populations like the LGBTQ+ community on a physical basis, like the development of an algorithm to train AI to pick out queer individuals, is discriminatory by nature. If this technology were to get into the wrong hands, it could have significant consequences for members of this community who already face a lot of prejudicial treatment. 
 
-b. (3 pts)
-
+b. While this specific study explores how facial recognition AI can be used to target certain populations, having the ability to identify these risks shows the capabilities of this technology. Though this application of AI is questionable, in controlled settings it could be used to help identify potential risks and the same technology could be translated to help doctors make diagnoses in the future to help patients. 
 
 
 4. 
