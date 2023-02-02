@@ -1,0 +1,30 @@
+---
+title: "Exercise Set 3"
+author: "Cora Ferguson"
+date: "2/2/2023"
+output: html_document
+---
+
+# Overview
+The goal of this set of exercises is to practice some of the different things that we have been learning in class.  Some of these include importing data of different types, manipulating data, performing preliminary analyses, etc. 
+
+## Question 1
+a. The first task is to import the data into the file.  I set up my "Exercises" project in *RStudio* with version control through *GitHub* so I can access the notes and exercises even after I graduate.  With this in mind, my goal is to make the data easy to access so if anyone were to cone my repo, the would also be able to run this code sucessfully.  To do this, I will be using the `here()` function - I learned about this process in Biostats with Erika.
+
+```{r}
+# clear the environment window
+rm(list = ls())
+
+# import the appropriate libraries
+library(readr)
+library(here)
+
+# import the data
+dogs <- read_csv(here("Data", "dog_intelligence_clean.csv"))
+
+# another way to do this without the here package:
+# dogs <- read_csv("Data/ dog_intelligence_clean.csv")
+
+```
+
+b. The next task is to 
