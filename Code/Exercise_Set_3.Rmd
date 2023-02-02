@@ -72,6 +72,76 @@ d. Now I will extract all of the elements of this vector except for the first el
 x_vec[-1]
 ```
 ## Question 3
+a. Natural log
+
+```{r}
+log(x_vec[1])
+```
+b. Log base 10
+```{r}
+log(x_vec[2], base = 10)
+```
+c. Square root
+```{r}
+sqrt(x_vec[3])
+```
+d. Pi
+```{r}
+print(pi)
+```
+e. Exponential
+```{r}
+exp(x_vec)
+```
+f. Modulo
+```{r}
+# by dividing the different values inside of this vector by 2, it allows us to determine whether they are even or odd. 
+x_vec%%2
+```
+g. Integer division
+```{r}
+x_vec[4] / 5
+```
+h. Determine the max and min value in a vector of numbers
+```{r}
+max(x_vec)
+
+min(x_vec)
+```
+i. Determine the location of the max value in a vector
+```{r}
+# finding the location of the max
+which(x_vec == max(x_vec), arr.ind = TRUE)
+```
+
+j. Determine the location of the min value in a vector
+```{r}
+# finding the location of the min
+which(x_vec == min(x_vec), arr.ind = TRUE)
+```
+k. Represent the value of infinity
+```{r}
+Inf
+```
+## Question 4
+a. The next task is to generate a tibble containing the data from a matrix on exam scores for three students. 
+```{r}
+library(tibble)
+
+exam_scores <- data_frame(
+     Exam1 = c(88, 75, 43),
+     Exam2 = c(82, 81, 57),
+     Exam3 = c(90, 85, 66),
+     Exam4 = c(83, 78, 41)
+)
+
+exam_scores
+```
+
+## Question 5
+Now, I will import the birthdays data. 
+
+
 
 
 
