@@ -9,7 +9,7 @@ output: html_document
 The goal of this set of exercises is to practice some of the different things that we have been learning in class.  Some of these include importing data of different types, manipulating data, performing preliminary analyses, etc. 
 
 ## Question 1
-a. The first task is to import the data into the file.  I set up my "Exercises" project in *RStudio* with version control through *GitHub* so I can access the notes and exercises even after I graduate.  With this in mind, my goal is to make the data easy to access so if anyone were to cone my repo, the would also be able to run this code sucessfully.  To do this, I will be using the `here()` function - I learned about this process in Biostats with Erika.
+a. The first task is to import the data into the file.  I set up my "Exercises" project in *RStudio* with version control through *GitHub* so I can access the notes and exercises even after I graduate.  With this in mind, my goal is to make the data easy to access so if anyone were to clone my repo, they would also be able to run this code successfully.  To do this, I will be using the `here()` function - I learned about this process in Biostats with Erika.
 
 ```{r}
 # clear the environment window
@@ -23,7 +23,7 @@ library(here)
 dogs <- read_csv(here("Data", "dog_intelligence_clean.csv"))
 
 # another way to do this without the here package:
-# dogs <- read_csv("Data/ dog_intelligence_clean.csv")
+# dogs <- read_csv("Data/dog_intelligence_clean.csv")
 
 ```
 
@@ -46,7 +46,7 @@ library(ggplot2)
 # run the code
 ggplot(dogs, aes(x = Breed, y = obey)) + geom_point() + coord_flip()
 
-# using the gear icon, I increased the custom figure size to 40 to increase the height of the figure so it is not a squished
+# using the gear icon, I increased the custom figure size to 40 to increase the height of the figure so it is not as squished
 ```
 
 ## Question 2
@@ -139,7 +139,21 @@ exam_scores
 ```
 
 ## Question 5
-Now, I will import the birthdays data. 
+Now, I will import the birthdays data. The goal of this import is to only include the birthdate and the name of the person.
+
+Since this is a .txt file, I will import it using the `read_delim()` function. 
+
+```{r}
+# import the birthdays data
+birthdays <- read_delim(here("Data", "birthdays.txt"),
+                      delim = "-",
+                      na = c("","NA","N/A"),
+                      col_names = c("Birthday", "Name")
+                      )
+
+birthdays
+```
+
 
 
 
