@@ -1,0 +1,82 @@
+---
+title: "Exercise Set 4"
+author: "Cora Ferguson"
+date: "2/18/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Question 1
+
+# Question 2
+First, I will import the colleges dataset and the libraries that are necessary to run the different sorting and manipulating tasks outlined by the exercises.
+
+```{r}
+# import the necessary libraries
+library(readr)
+library(here)
+library(dplyr)
+
+# import the data
+colleges <- read_csv(here("Data", "colleges2015.csv"))
+```
+
+12. Filter the rows for colleges in Great Lakes or New England regions.
+```{r}
+# filter the rows for colleges in the great lake or new England regions
+colleges %>%
+  filter(region == "New England" | region == "Great Lakes")
+```
+
+13. Which school in Great Lakes or New England region has the highest first-year retention rate in this reduced data set.
+```{r}
+# figure out which school has the highest first year retention rate
+colleges %>%
+  filter(region == "New England" | region == "Great Lakes") %>% 
+     arrange(desc(FYretention)) %>%
+     slice(1:2)
+```
+Sacred Heart Major Seminary school in Detroit and Yeshiva Gedolah of Greater Detroit in Oak Park are tied for the highest first year retention rate of 100%.
+
+14. Which school in Great Lakes or New England region has the lowest admissions rate in this reduced data set.
+```{r}
+# figure out which school has the lowest admissions rate
+colleges %>%
+  filter(region == "New England" | region == "Great Lakes") %>% 
+     arrange(admissionRate) %>% 
+     slice(1)
+```
+Harvard has the lowest admission rate out of all of these colleges and/or universities. 
+
+15. Using the full data set, create a column giving the cumulative average cost of attendance, assuming that students finish in four years and that costs increase 3% per year. Name this new column `total_cost_4yrs`.
+
+```{r}
+# define variables that outline the cost        for each year of college
+year1 = colleges$cost
+year2 = year1*1.03
+year3 = year2*1.03
+year4 = year3*1.03
+
+# use mutate to add a column outlining the total cost of attendance
+colleges <- colleges %>%
+     mutate(total_cost_4yrs = year1+year2+year3+year4, na.rm = TRUE)
+```
+
+16. Using the full data set, summarize the total cost of attendance by region by calculating the 10th, 50th, and 90th percentiles. Then arrange them by median costs (from highest to lowest).
+```{r}
+colleges <- colleges %>%
+     group_by(region) %>%
+     summarise(quantile = scales::percent(c(0.1, 0.5, 0.9)),
+               cost = quantile(total_cost_4yrs,c(0.1, 0.5, 0.9), na.rm = TRUE)) %>%
+     arrange(desc(cost))
+```
+
+17. Place your result from the previous question in a nicely formatted, HTML friendly, table.
+```{r}
+# use the knitr function to clean up the output and add a caption
+knitr::kable(colleges, digits = 3, caption = "Estimated cost of 4 year Universities from 2015 to 2019 organized by region.")
+```
+

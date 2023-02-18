@@ -148,7 +148,7 @@ Since this is a .txt file, I will import it using the `read_delim()` function.
 birthdays <- read_delim(here("Data", "birthdays.txt"),
                       delim = "-",
                       na = c("","NA","N/A"),
-                      col_names = c("Birthday", "Name")
+                      col_names = c("Birthday", "Person")
                       )
 
 birthdays
