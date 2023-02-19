@@ -10,6 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Question 1
+A big challenge in science today is reproducibility.  A huge emphasis is placed on recording everything performed during an experimental protocol, and this is for good reason - if others can replicate the results of an experiment, it validates the findings and keeps scientists accountable.  Where there is less emphasis on accountability is in data analysis.  Ironically, data analysis is arguably the most important part of scientific research but how data is analysed and the methodology behind it is murky.  For this reason, I chose the article titled *Package Management for Reproducible R Code* which can be found at  [text to display](https://www.r-bloggers.com/2018/01/package-management-for-reproducible-r-code/){target="_blank"}.
+
+This article outlines one of the growing challenges that the *R* community faces today - how to maintain reproducibility while adapting to new packages and ever evolving technological systems.  Just like any software, *R* is constantly evolving and outside programmers are building new packages to improve functionality and versatility.  While this innovation has improved the development of the software, it also places a larger degree of responsibility on the user to ensure that others can use their code in the way it was intended to.  For some, this is as simple as creating projects with version control using things like *GitHub*.  For more complicated projects, containers like *Docker* can be used to keep track of all of the dependencies that are required for your project.  These programs not only help you stay organized and keep track of changes, but they also allow others to reproduce your code which maintains the integrity of your work and ultimately helps the field progress. 
 
 # Question 2
 First, I will import the colleges dataset and the libraries that are necessary to run the different sorting and manipulating tasks outlined by the exercises.
@@ -78,5 +81,56 @@ colleges <- colleges %>%
 ```{r}
 # use the knitr function to clean up the output and add a caption
 knitr::kable(colleges, digits = 3, caption = "Estimated cost of 4 year Universities from 2015 to 2019 organized by region.")
+```
+
+# Question 3
+The first thing that I am going to do is load the data set:
+```{r}
+data("iris")
+```
+
+a. Now I am going to create two new variables outlining the ratios between the lengths and widths of the petals and sepals.  The last variable will state whether the petal to sepal length ratio is greater than 0.75.
+```{r}
+iris <- iris %>% 
+  mutate(p.to.s.width = Petal.Width/Sepal.Width,
+         p.to.s.length = Petal.Length/Sepal.Length,
+         p.to.s.length.ratio = (p.to.s.length>.75))
+
+iris
+```
+
+b. Now I will calculate the number of observations in the dataset, the average sepal length, the 25th percentile of the petal to sepal length, and the proportion of petal to sepal length ratios larger than 0.75.
+```{r}
+iris_species <-
+  iris %>%
+  group_by(Species) %>%
+  summarise(n.observations = n(),
+            Mean.Sepal.Length = mean(Sepal.Length),
+            First.quartile.p.to.s.length = quantile(p.to.s.length, .25),
+            p.to.s.ratio.over.75 = (n_distinct(p.to.s.length.ratio))/n.observations)
+```
+
+c. Now, I will find the means for all of the numerical variables in the data based on the species.
+```{r}
+iris_species %>%
+  group_by(Species) %>%
+  summarise(across(where(is.numeric), mean))
+```
+
+d. Now I will subset the data so I only have the versicolor flowers with Petal to Sepal length ratios above 0.75.  
+```{r}
+iris %>%
+  filter(Species == "versicolor", 
+         p.to.s.length.ratio == TRUE) %>%
+  select(p.to.s.length)
+```
+e. Now I will go back to the original iris data and subset it by species to keep the flowers with the two largest petal widths.
+```{r}
+iris %>%
+  group_by(Species) %>%
+  select(Petal.Width) %>%
+      arrange(desc(Petal.Width)) %>%
+        slice(1:2)
+  
 ```
 
