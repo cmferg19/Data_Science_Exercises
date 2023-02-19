@@ -10,9 +10,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 # Question 1
-A big challenge in science today is reproducibility.  A huge emphasis is placed on recording everything performed during an experimental protocol, and this is for good reason - if others can replicate the results of an experiment, it validates the findings and keeps scientists accountable.  Where there is less emphasis on accountability is in data analysis.  Ironically, data analysis is arguably the most important part of scientific research but how data is analysed and the methodology behind it is murky.  For this reason, I chose the article titled *Package Management for Reproducible R Code* which can be found at  [text to display](https://www.r-bloggers.com/2018/01/package-management-for-reproducible-r-code/){target="_blank"}.
+A big challenge in science today is reproducibility.  A huge emphasis is placed on recording everything performed during an experimental protocol, and this is for good reason - if others can replicate the results of an experiment, it validates the findings and keeps scientists accountable.  Where there is less emphasis on accountability is in data analysis.  Ironically, data analysis is arguably the most important part of scientific research but how data is analysed and the methodology behind it is murky.  For this reason, I chose the article titled [*Package Management for Reproducible R Code*](https://www.r-bloggers.com/2018/01/package-management-for-reproducible-r-code/){target="_blank"}.
 
-This article outlines one of the growing challenges that the *R* community faces today - how to maintain reproducibility while adapting to new packages and ever evolving technological systems.  Just like any software, *R* is constantly evolving and outside programmers are building new packages to improve functionality and versatility.  While this innovation has improved the development of the software, it also places a larger degree of responsibility on the user to ensure that others can use their code in the way it was intended to.  For some, this is as simple as creating projects with version control using things like *GitHub*.  For more complicated projects, containers like *Docker* can be used to keep track of all of the dependencies that are required for your project.  These programs not only help you stay organized and keep track of changes, but they also allow others to reproduce your code which maintains the integrity of your work and ultimately helps the field progress. 
+This article outlines one of the growing challenges that the *R* community faces today - how to maintain reproducibility while adapting to new packages and ever evolving technological systems.  Just like any software, *R* is constantly evolving and outside programmers are building new packages to improve its functionality and versatility.  While this innovation has improved the development of the software, it also places a larger degree of responsibility on the user to ensure that others can use their code in the way it was intended to.  The article outlines how for some, this is as simple as creating projects with version control using programs like *GitHub*.  For more complicated projects, containers like *Docker* can be used to keep track of all of the dependencies that are required for your project.  These programs not only help you stay organized and keep track of changes, but they also allow others to reproduce your code which maintains the integrity of your work and ultimately helps the field progress. 
 
 # Question 2
 First, I will import the colleges dataset and the libraries that are necessary to run the different sorting and manipulating tasks outlined by the exercises.
@@ -66,6 +66,8 @@ year4 = year3*1.03
 # use mutate to add a column outlining the total cost of attendance
 colleges <- colleges %>%
      mutate(total_cost_4yrs = year1+year2+year3+year4, na.rm = TRUE)
+
+colleges
 ```
 
 16. Using the full data set, summarize the total cost of attendance by region by calculating the 10th, 50th, and 90th percentiles. Then arrange them by median costs (from highest to lowest).
@@ -75,6 +77,8 @@ colleges <- colleges %>%
      summarise(quantile = scales::percent(c(0.1, 0.5, 0.9)),
                cost = quantile(total_cost_4yrs,c(0.1, 0.5, 0.9), na.rm = TRUE)) %>%
      arrange(desc(cost))
+
+colleges
 ```
 
 17. Place your result from the previous question in a nicely formatted, HTML friendly, table.
@@ -108,6 +112,8 @@ iris_species <-
             Mean.Sepal.Length = mean(Sepal.Length),
             First.quartile.p.to.s.length = quantile(p.to.s.length, .25),
             p.to.s.ratio.over.75 = (n_distinct(p.to.s.length.ratio))/n.observations)
+
+iris_species
 ```
 
 c. Now, I will find the means for all of the numerical variables in the data based on the species.
