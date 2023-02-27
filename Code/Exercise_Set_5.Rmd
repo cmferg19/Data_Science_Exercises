@@ -1,0 +1,172 @@
+---
+title: "Exercise Set 5"
+author: "Cora Ferguson"
+date: "2/23/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Question 1 
+The goal of this exercise set is to practice and become more familiar with `dplyr`. For this, I will be using a data set with metrics on song lyrics from popular artists. 
+
+```{r}
+# clear R's environment
+rm(list = ls())
+# import the libraries needed
+library(dplyr)
+library(readr)
+library(here)
+
+# import the data
+popmusic <- read_csv(here("Data", "popmusic.csv"))
+```
+a. Create a new variable that counts the number of unique word in each song.
+```{r}
+popmusic <-
+     popmusic %>%
+     mutate(unique_words = ttr*words)
+
+popmusic
+```
+
+
+b. Find the ten most sad/angry/downbeat songs. Keep only the artist and year in the resulting dataset.
+```{r}
+popmusic %>%
+  select(artist, year, sentiment) %>%
+     slice_max(sentiment, n = 10)
+```
+
+c. Find the number of songs from 2012 by either Bieber or Swift.
+```{r}
+popmusic %>%
+  filter(year == "2012" & (artist == "Bieber"| artist == 
+                             "Swift")) %>%
+  group_by(artist)%>%
+  summarise(n_songs = n())
+  
+```
+
+d. Consider Adele only. Calculate the following all within the same chain of piped commands.
+
+i. number of songs 
+ii. median TTR, rounded to 2 decimal places.
+proportion of songs with negative sentiment, rounded to 2 decimal places.
+iii. highest (positive) sentiment
+```{r}
+popmusic %>%
+  filter(artist == "Adele") %>%
+  
+  summarise(n_songs = n(),
+            median_TTR = round(median(ttr), 2),
+            neg_sentiment_prop = round((sentiment<0)/(sentiment),2),
+            max_sentiment = max(sentiment)
+            )
+```
+
+e. For each artist, determine the following. Again, try to structure your code so that it is a single chain of piped commands that begins with the full data set
+
+i. number of songs
+ii. number of albums
+iii. the average sentiment for their songs
+iv. average number of unique words per song
+v. Then, sort the artists by their average level of positivity (with the most positive artist being first)
+```{r}
+popmusic %>%
+  group_by(artist)%>%
+  summarise(n_songs = n(),
+            n_albums = n_distinct(year),
+            avg_sentiment = mean(sentiment),
+            avg_unique = mean(unique_words),
+            avg_positive = mean(sentiment > 0)
+            ) %>%
+  arrange(desc(avg_positive))
+```
+
+
+## Question 2
+Before I get to the questions, I am going to import the dataset
+
+```{r}
+library(ggplot2)
+
+AmesHousing <- read_csv(here("Data", "AmesHousing.csv"))
+```
+
+1) In this dataset, how many houses were sold with four fireplaces?
+```{r}
+AmesHousing %>% 
+     filter(Fireplaces == 4) %>%
+     summarise(four_fireplaces = n())
+
+# Create histogram for number of fireplaces
+qplot(data=AmesHousing,x=Fireplaces)
+
+```
+
+2) What is the `facet` argument used for?
+The `facet` argument is used to seperate different plots based on a specific variable that is different between the conditions. This can be used to group similar information together and/or split up other types of information based on different metrics.
+
+3) Based upon the data documentation, what are the five different levels for kitchen quality?
+The five different levels for kitchen quality are:
+  Ex - excellent
+  Gd - good
+  TA - Typical/Average
+  Fa - Fair
+  Po - Poor
+
+4) Do these graphs indicate that the quality of a kitchen could be related to the sale price?
+These graphs do indicate that the quality of a kitchen could be related to the sale price. On average, as the sale price of the homes increases, so does the kitchen quality.
+
+5) In the RStudio console, type `?qplot`. Modify the above code to create a barchart (`geom='bar'`) to count the number of sales for each level of kitchen quality. What is the difference between the color and fill command?
+```{r}
+# Create barchart for number of sales for each level of kitchen quality
+qplot(data=AmesHousing,x=KitchenQual, geom = "bar")
+```
+The color command designates the color of the outline of the graph.  The fill command will dictate the color of the inside of the bars in the graph. 
+
+6) Modify the code for histogram above so that the `aes` is not within the `geom`. However the resulting graph should look identical to the one above.
+```{r}
+# Create barchart for number of sales for each level of kitchen quality
+qplot(data=AmesHousing,x=KitchenQual)
+```
+
+7) Create a scatterplot using `ggplot` with **Fireplaces** as the x-axis and **SalePrice** as the y-axis.
+```{r}
+# create a scatterplot comparing fireplaces to sale price
+
+ggplot(data = AmesHousing)+
+  geom_point(mapping = aes(Fireplaces, SalePrice))
+```
+
+
+8) Create a histogram of the above ground living area, `GrLivArea`.
+```{r}
+ggplot(data = AmesHousing)+
+  geom_histogram(mapping = aes(GrLivArea))
+```
+
+
+9) Create a scatterplot using `Year.Built` as the explanatory variable and `SalePrice` as the response variable. Include a regression line, a title, and labels for the x and y axes.
+```{r}
+# create scatterplot comparing year built to sale price
+ggplot(data = AmesHousing) +
+  geom_point(mapping = aes(x=YearBuilt, y = SalePrice))+
+  geom_smooth(mapping = aes(x=YearBuilt, y=SalePrice), method = lm)+
+  labs(title= "Figure 1: Sale prices in Ames, IA based on the year houses were built", x= "Year Homes were Built", y="Sale Price of individual homes")
+  
+```
+
+10) Modify the scatterplot in Question 9) so that there is still only one regression line, but the points are colored by the overall condition of the home, `Overall.Cond`. 
+```{r}
+# create scatterplot comparing year built to sale price
+ggplot(data = AmesHousing) +
+  geom_point(mapping = aes(x=YearBuilt, y = SalePrice, color = OverallCond))+
+  geom_smooth(mapping = aes(x=YearBuilt, y=SalePrice, color = OverallCond), method = lm)+
+  labs(title= "Figure 1: Sale prices in Ames, IA based on the year houses were built", x= "Year Homes were Built", y="Sale Price of individual homes")
+  
+```
