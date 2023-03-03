@@ -38,7 +38,83 @@ The `color` command is used to color the outline of a plot.  The `fill` command 
 In the boxplot, the `coord_flip` command causes the x and the y axis to switch.  This flips the boxplot from a vertical orientation to a horizontal orientation. 
 
 15) Create a new boxplot, similar to the one above, but use `theme_bw()` instead of the given theme command. Explain how the graph changes.
+```{r}
+ggplot(AmesHousing, aes(x = Fireplaces, y = SalePrice, color = PavedDrive, group = PavedDrive)) +
+  geom_boxplot() +
+  labs(title="Housing Prices in Ames, Iowa") +
+  theme(plot.title = element_text( color = "blue", face="bold", size=12, hjust=0))+
+     theme_bw()
+```
+The background of the graph changes when I add in the `theme_bw()` command.  It causes the background to go from light grey to black and white. 
+
 
 16) Use the tab completion feature in RStudio (type theme and hit the `Tab` key to see various options) to determine what theme is the default for most graphs in ggplot.
+```{r}
+theme_classic()
+```
+The classic theme is the default for most graphs in ggplot. This has a light grey background. 
+
 
 17) In order to complete this activity, you will need to use the `dplyr` package to manipulate the dataset before making any graphics.
+* Restrict the `AmesHousing` data to only sales under normal conditions. In other words, `Condition.1 == Norm`
+* Create a new variable called `TotalSqFt = GRLivArea  +  TotalBsmtSF` and remove any homes with more than 3000 total square feet.
+* Create a new variable, where `No` indicates no fireplaces in the home and `Yes` indicates at least one fireplace in the home.
+* With this modified data file, create a graphic involving no more than three explanatory variables that best portrays how to predict sales price. For example, Figure 12 uses a linear model of kitchen quality, above ground square footage, and number of fireplaces to predict sale price.
+
+```{r}
+# cleaning up the AmesHousing data
+AmesHousing_Clean <-
+     AmesHousing %>%
+     filter(Condition1 == "Norm") %>%
+     mutate(TotalSqFt = GrLivArea  +  TotalBsmtSF) %>%
+     filter(TotalSqFt < 3000) %>%
+     mutate(Fireplaces_yn = case_when(Fireplaces <1 ~ 'No',
+                           Fireplaces >= 1 ~ 'Yes',
+                           ))
+```
+
+```{r}
+# Creating a graphic that best predicts sale prices of houses
+AmesHousing_Clean %>%
+     ggplot(aes(x = YearBuilt, y= SalePrice)) +
+     geom_point(aes(color = FullBath))+
+     geom_smooth(method = lm)+
+     facet_wrap(~Fireplaces_yn)+
+     theme_bw()
+```
+For this graph, I am using the year built, the number of full bathrooms, and whether there is a fireplace or not to predict sale price. 
+
+## Question 2
+a. The first task is to reconstruct a plot using the `popmusic.csv` dataset.
+
+```{r}
+# import the data
+popmusic <- read_csv(here("Data", "popmusic.csv"))
+```
+Here the x-axis is defined by the number of words, the y-axis is the ttr rating, and the plots are seperated by artist.
+```{r}
+popmusic %>%
+     filter(artist == "Adele" | artist == "Beyonce" | artist == "Swift")%>%
+     ggplot(aes(x=words, y = ttr))+
+     geom_point()+
+     geom_smooth(aes(color = artist))+
+     facet_wrap(~artist)+
+     theme(legend.position = "none")
+```
+
+b. The next task is to reconstruct a boxplot showing the spread of ttr data by artist.
+```{r}
+popmusic %>%
+     ggplot(aes(x = artist, y = ttr))+
+     geom_boxplot(aes(fill = artist))+
+     scale_fill_brewer(palette = "Pastel2")+
+     coord_flip()+
+     labs(x = "Musical Artist", y = "Type-Tolkien Ratio", caption = "Comparing distributions of Type-Tolkien Ratios for six popular musical artists")+
+     theme_bw()
+     
+
+```
+
+
+
+

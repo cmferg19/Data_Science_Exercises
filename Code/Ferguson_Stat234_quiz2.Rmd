@@ -1,0 +1,53 @@
+---
+title: "STAT/DATA 234 - Quiz 2"
+output: html_notebook
+---
+
+## Question 1
+The first think that I will do is import the libraries that I will need and load the *starwars* data that is available in the `dplyr` package.
+```{r}
+# import libraries
+library(dplyr)
+
+# import dataset
+data("starwars")
+```
+
+## Question 2
+Now I will construct a dataset containing only the humans and droids.
+```{r}
+starwarsHD <- starwars %>%
+     filter(species=="Human" | 
+            species =="Droid")
+
+starwarsHD
+```
+## Question 3
+Using the *starwarsHD* tibble, I will calculate the BMI for each individual and store it as a new object. In this dataset, the height of the characters is listed in cm and the mass is listed in kg.  To accomodate for that, I must use the metric BMI calculation which is as follows: 
+
+BMI = (Weight in Kilograms / (Height in Meters x Height in Meters))
+```{r}
+# since the height is in cm, we need to multiply it by 0.01 to convert it into meters
+starwarsBMI <- starwarsHD %>%
+     mutate(BMI = mass/((height*0.01)*(height*0.01)))
+
+starwarsBMI
+```
+## Question 4
+The next task is to consruct another tibble that only keeps the name, species and BMI of the characters.  I will also sort this in a way that places the characters with the highest BMI at the top.
+```{r}
+starwarsBMI %>%
+     select(name, species, BMI) %>%
+     arrange(desc(BMI))
+```
+## Question 5
+The last task is to calculate the total number of characters and the average BMI for both the humans and the droids.
+```{r}
+starwarsBMI %>%
+     group_by(species) %>%
+          summarise(n_characters = n(),
+                    avg_BMI = mean(BMI, na.rm=TRUE))
+```
+
+
+
