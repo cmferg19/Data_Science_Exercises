@@ -1,0 +1,44 @@
+---
+title: "Exercise Set 6"
+author: "Cora Ferguson"
+date: "3/2/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+The goal of exercise set 6 is to practice some of the `ggplot2` functions that we have been working with in class.  In this set of exercises, I will be using the "AmesHousing" dataset which encompasses housing data from Ames, IA.
+
+First, I will set up the workspace and load the data into the environment:
+```{r}
+# clear environment
+rm(list = ls())
+
+# import the appropriate libraries
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(here)
+
+# import the dataset
+AmesHousing <- read_csv(here("Data", "AmesHousing.csv"))
+```
+## Question 1
+This series of exercises comes from the "06-data_visualization.Rmd" file that we have been working through. 
+
+13) In the density plot above, explain what the `color`, `fill`, and `alpha` commands are used for. Hint: try running the code with and without these commands or use the Data Visualization Cheat Sheet. 
+
+The `color` command is used to color the outline of a plot.  The `fill` command is used to fill the inside of a plot with a defined color.  The `alpha` command dictates the transparency of the plot with respect to the background. 
+
+14) In the boxplot, what is done by the code `coord_flip()`?
+
+In the boxplot, the `coord_flip` command causes the x and the y axis to switch.  This flips the boxplot from a vertical orientation to a horizontal orientation. 
+
+15) Create a new boxplot, similar to the one above, but use `theme_bw()` instead of the given theme command. Explain how the graph changes.
+
+16) Use the tab completion feature in RStudio (type theme and hit the `Tab` key to see various options) to determine what theme is the default for most graphs in ggplot.
+
+17) In order to complete this activity, you will need to use the `dplyr` package to manipulate the dataset before making any graphics.
