@@ -45,7 +45,7 @@ TV %>%
 3. Analyzing Season Finales (i.e., the last episode in each season)
 ```{r}
 # convert season number to factor
-
+TV <- TV %>% as.factor(seasonNumber)
 
 # pick out the last episode of each season
 TV_Finale <- TV %>%
