@@ -1,0 +1,57 @@
+---
+title: "Project 3"
+author: "Cora Ferguson"
+date: "3/5/2023"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Project 3
+
+### Overview
+The goal of this project is to practice dealing with data scraped using a shiny app developed at St. Lawrence University on the TV show *Modern Family*.  
+
+```{r}
+# load in the libraries we will need
+library(here)
+library(dplyr)
+library(ggplot2)
+library(readr)
+
+# load the data
+TV <- read_csv(here("Data", "imdb_data.csv"))
+
+```
+### Required Analyses
+
+1. Display the IMDb ratings by season
+```{r}
+TV %>%
+     ggplot(aes(x = seasonNumber, y = averageRating)) +
+     geom_point()+
+     labs(x = "Season Number", y = "Average Rating")
+```
+2. Display the trend in IMDb rating as the series progresses (i.e., using Overall Episode Number)
+```{r}
+TV %>%
+     ggplot(aes(x = episodeNumber_overall, y = averageRating)) +
+     geom_point()+
+     labs(x = "Overall Episode Number", y = "Average Rating")
+```
+
+3. Analyzing Season Finales (i.e., the last episode in each season)
+```{r}
+# convert season number to factor
+
+
+# pick out the last episode of each season
+TV_Finale <- TV %>%
+     group_by(seasonNumber) %>%
+     slice_max(~episodeNumber_in_season, n=1)
+```
+
+This can be using either a table or graph. Choose whichever you think you can display better.
+
