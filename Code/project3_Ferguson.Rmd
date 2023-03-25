@@ -15,6 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 The goal of this project is to practice dealing with data scraped using a shiny app developed at St. Lawrence University on the TV show *Modern Family*.  
 
 ```{r}
+rm(list = ls())
 # load in the libraries we will need
 library(here)
 library(dplyr)
@@ -29,29 +30,109 @@ TV <- read_csv(here("Data", "imdb_data.csv"))
 
 1. Display the IMDb ratings by season
 ```{r}
-TV %>%
-     ggplot(aes(x = seasonNumber, y = averageRating)) +
-     geom_point()+
-     labs(x = "Season Number", y = "Average Rating")
+TV <- TV %>%
+        mutate(seasonNumber_fct = factor(seasonNumber))
+
+IMDb_by_season <- 
+        TV %>%
+     ggplot(aes(x = seasonNumber_fct, y = averageRating)) +
+     geom_boxplot(aes(color = seasonNumber_fct))+
+     labs(x = "Season", y = "IMBd Ratings", color = "Season\nNumber", caption = "Fig. 1: IMBd rating data for the episodes of Modern Family seperated by season.")+
+     theme_bw()+
+        theme(legend.position="none")
+        
+
+IMDb_by_season
+
+ggsave("IMDb_by_season.png", width = 6, height = 4)
 ```
-2. Display the trend in IMDb rating as the series progresses (i.e., using Overall Episode Number)
 ```{r}
 TV %>%
+        group_by(seasonNumber) %>%
+        summarise(meanrating = mean(averageRating),
+                  greatestEpisode = max(averageRating))
+
+TV %>%
+        slice_max(averageRating, n=1) 
+
+TV %>%
+slice_min(averageRating,n=1)
+```
+
+
+2. Display the trend in IMDb rating as the series progresses (i.e., using Overall Episode Number)
+```{r}
+IMBD_trend <-
+TV %>%
      ggplot(aes(x = episodeNumber_overall, y = averageRating)) +
-     geom_point()+
-     labs(x = "Overall Episode Number", y = "Average Rating")
+     geom_point(aes(color = seasonNumber_fct))+
+     labs(x = "Overall Episode Number", y = "Average Rating", color = "Season\nNumber", caption = "Fig. 2: Average IMDb rating for each episode produced.")+
+        theme_bw()+
+        geom_smooth(method = lm)
+        
+
+IMBD_trend
+
+
+
+ggsave(filename = "IMBD_trend.png", 
+       plot = IMBD_trend,
+       width = 6, 
+       height = 4)
+        
+```
+```{r}
+IMBD_trend2 <-
+TV %>%
+     ggplot(aes(x = episodeNumber_overall, y = averageRating)) +
+     geom_point(aes(color = seasonNumber_fct))+
+     labs(x = "Overall Episode Number", y = "Average Rating", color = "Season\nNumber", caption = "Fig. 3: Average IMDb rating for each episode produced.")+
+        theme_bw()+
+        geom_smooth(method = lm)+
+        coord_cartesian(ylim = c(0,10))
+
+IMBD_trend2
+
+
+
+ggsave(filename = "IMBD_trend2.png", 
+       plot = IMBD_trend2,
+       width = 6, 
+       height = 4)
+        
 ```
 
 3. Analyzing Season Finales (i.e., the last episode in each season)
 ```{r}
 # convert season number to factor
-TV <- TV %>% as.factor(seasonNumber)
+TV <- TV %>% 
+        mutate(seasonNumber = factor(seasonNumber))
 
 # pick out the last episode of each season
 TV_Finale <- TV %>%
-     group_by(seasonNumber) %>%
-     slice_max(~episodeNumber_in_season, n=1)
+        group_by(seasonNumber) %>%
+        slice_max(episodeNumber_in_season, n=1)
+
+TV_Finale
 ```
 
 This can be using either a table or graph. Choose whichever you think you can display better.
+```{r}
+# re order the episode names by the season number
+library(forcats)
+# creating a graph for the ratings of the season finales
+IMBD_finale <-
+TV_Finale %>%
+        ggplot(aes(x = seasonNumber, y = averageRating, color = numVotes))+
+        geom_point(size = 3)+
+     labs(x = "Season Number", y = "Average Rating", color = "Number of Votes", caption = "Fig. 4: Average IMBd ratings for each season finale and the number of votes\nthey recieved.")+
+        theme_bw()
+
+IMBD_finale
+
+ggsave(filename = "IMBD_finale.png", 
+       plot = IMBD_finale,
+       width = 6, 
+       height = 4)
+```
 

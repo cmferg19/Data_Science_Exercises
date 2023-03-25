@@ -1,0 +1,220 @@
+---
+title: "Exercise Set 7"
+output: html_notebook
+---
+
+## Overview
+The goal of this exercise set is to practice some of the different things that we have been working on using the `tidyr` package.  The `tidyr` package was designed to convert data into different formats to make it easier to work with and/or perform analasis on.
+
+## Questions
+
+1. The first task is to finish reading through the rest of lesson 10.
+
+2. Now I will work through the 10.9 additional exercises problems.
+
+```{r}
+# clear the environment and set up the workspace
+rm(list = ls())
+
+library(here)
+library(dplyr)
+library(tidyr)
+library(readr)
+library(ggplot2)
+```
+For this set of questions I will be using the file `daily_show_guests.csv` which has information on the different guests who have appeared on *The Daily Show*.
+
+```{r}
+daily_show <- read_csv(here("Data","daily_show_guests.csv"))
+daily_show
+```
+a. This is a tidy data set because each variable is in its own column and every observation is in its own row within the data set. 
+
+
+b. Now I will do some data manipulation with another data set that is not tidy.  For this, I will be using the `under5mortality.csv` data set.
+
+```{r}
+under5mortality <- read_csv(here("Data", "under5mortality.csv"))
+under5mortality
+```
+     - This is currently not a tidy data set because the years can be consolidated to one column with the corresponding variables in the correct spaces. 
+     - To fix this, I will using the `pivot_longer()` function from the `tidyr` package.
+     
+```{r}
+under5mortality_tidy <-
+     under5mortality %>%
+     pivot_longer(cols = c(2:217), 
+                  names_to = "Year",
+                  values_to = "Mortality"
+                  ) %>%
+     drop_na(Mortality) %>%
+     rename(Country =`Under five mortality`)
+```
+     
+Now we will move on to the next data set.
+
+```{r}
+mlb2016 <- read_csv(here("Data", "mlb2016.csv"))
+mlb2016
+
+```
+        - This is not a tidy data set because there are two different types of information in the Years column. Additionally, there is a dollar sign in the total.value column which is unnecessary.
+        
+        - Use `seperate` and `parse.number` to tidy the data set:
+```{r}
+mlb2016_tidy <- 
+        mlb2016 %>%
+        separate(col = "Years",
+                 into = c("n_Years", "Years"),
+                 sep = " ") %>%
+        mutate(Salary = parse_number(Salary),
+               Total.Value = parse_number(Total.Value),
+               Avg.Annual = parse_number(Avg.Annual))
+```
+
+Now I will practice similar things with a ubs prices data set
+
+```{r}
+# import the data set
+ubsprices <- read_csv(here("Data", "UBSprices2.csv"))
+ubsprices
+```
+        - This is not a tidy data set because the columns have the name of the food and the year in them.  To tidy this up the name of the food and the year should be placed into their own seperate columns
+        - Use pivot_longer and separate to tidy this data set. (Hint: In addition to accepting characters, the sep argument can also be set to the position at which to create a split. For example, if we specify sep = 2, then the character strings will be split into the first two characters and the remaining characters. In this example the type of commodity is of variable length, so it is easiest to count from the left. This is specified by using a negative value.)
+        
+```{r}
+ubsprices_tidy <-
+        ubsprices %>%
+        pivot_longer(cols = 2:7,
+                     names_to = "food",
+                     values_to = "price") %>%
+        separate(col = "food",
+                 into = c("food", "year"),
+                 sep = -4)
+```
+        
+
+
+
+
+
+Starting with the data in the format from part A, pivot it such that you have three rows (corresponding to the cities) and 13 columns (one for the city name, and 12 for the months - each of which contains that city’s corresponding monthly temperature).
+
+```{r}
+under5mortality %>%
+        pivot_wider(names_from = "Under five mortality",
+                    values_from = "Months")
+```
+
+
+3. The file `weather_cities.csv` contains average monthly high temperatures (in degrees Fahrenheit) for three cities in the USA.
+```{r}
+# import the data
+weather <- read_csv(here("Data", "weather_cities.csv"))
+```
+
+a. Pivot the data such that you have three variables, Month, City, and Temperature with 36 rows.
+```{r}
+weather_tidy_a <-
+        weather %>%
+        pivot_longer(cols = 2:4,
+                     names_to = "City",
+                     values_to = "Temperature"
+                     )
+```
+
+b. Create a table that with three rows (one per city) and two columns (one for the city name and the other for the maximum monthly temperature). The max temperature should be pulled directly from the data for each city, not simply by selecting the the month of July. (i.e., The code should be written in a way that it would work for cities where the max temp is in August or June or whatever.)
+```{r}
+weather_tidy_a %>%
+        group_by(City)%>%
+        summarise(Max_temp = max(Temperature))
+```
+
+c. Starting with the data in the format from part A, pivot it such that you have three rows (corresponding to the cities) and 13 columns (one for the city name, and 12 for the months - each of which contains that city’s corresponding monthly temperature).
+```{r}
+weather %>%
+    pivot_longer(cols = 2:4,
+                     names_to = "City",
+                     values_to = "Temperature"
+                     ) %>%
+    pivot_wider(names_from = "Month",
+                values_from = "Temperature")
+    
+```
+
+4. Complete Challenge 1 from the class on March 15. (FYI, Challenge 2 will be part of the next exercise set.) For your convenience here is the question again.
+Mainly using the separate function, clean up the data in the file data/stat113_sp19_sections.csv. See if you can structure it in a similar way as shown below. (You do not need to match ) You might find the the extra = "merge" option useful for this problem.
+
+```{r}
+# read in the data
+stat113_sp19 <- read_csv(here("Data", "stat113_sp19_sections.csv"), name_repair = make.names)
+```
+
+Now let's fix this up:
+```{r}
+
+stat113_sp19_tidy <- 
+     # seperate the different variables in the Section.Name.and.Title column
+     stat113_sp19 %>%
+     separate(col =Section.Name.and.Title,
+              into = c("Department", "Course.Number", "Section"),
+              sep = c("-"," ", " ")
+              ) %>%
+     separate(col = Section,
+              into = c("Section", "Title"),
+              sep = " ",
+              extra = "merge"
+              ) %>%
+    
+      # Seperate the semester and year
+     separate(col = Term,
+              into = c("Semester", "Year"),
+              sep = " ", 
+              convert = TRUE
+             ) %>%
+     
+     # Now lets tackle the Meeting.Information column, we need to seperate this into Start.Date, End.Date,         Style, and Days  
+     separate(col = Meeting.Information,
+               into = c("Start.Date", "End.Date"),
+               sep = "-",
+               extra = "merge"
+              )%>%
+     separate(col = End.Date,
+              into = c("End.Date", "Style"),
+              sep = " ",
+              extra = "merge"
+              ) %>%
+     separate(col = Style,
+              into = c("Style", "Days"),
+              sep = " ",
+              extra = "merge"
+              ) %>%
+     separate(col = Days,
+              into = c("Days", "Start.Time"),
+              sep = c(-43),
+              extra = "merge"
+             ) %>%
+     separate(col = Start.Time,
+              into = c("Start.Time", "End.Time"),
+              sep = c("-"),
+              extra = "merge"
+              ) %>%
+     separate(col = End.Time,
+              into = c("End.Time", "Building"),
+              sep = ",",
+              extra = "merge"
+              ) %>%
+     separate(col = Building,
+              into = c("Building", "Room"),
+              sep = ","
+              ) %>%
+     mutate(Room = parse_number(Room)
+            ) %>%
+     separate(col = Available..Capacity,
+              into = c("Available", "Capacity"),
+              sep = "/",
+              convert = TRUE
+              ) %>%
+     select(c(-CEUs, -Location))
+     
+```
